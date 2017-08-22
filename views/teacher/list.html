@@ -22,7 +22,7 @@
         <li class="active">讲师列表</li>
       </ol>
       <div class="page-title">
-        <a href="./teacher_add.html" class="btn btn-success btn-sm pull-right">添加讲师</a>
+        <a href="/teacher/add" class="btn btn-success btn-sm pull-right">添加讲师</a>
       </div>
       <div class="panel panel-default">
         <div class="panel-body">
@@ -68,7 +68,7 @@
       </div>
       <div class="panel-body">
         <table class="table table-bordered table-condensed">
-          <tbody id = 'teacherModal_tbody'>
+          <tbody id='teacherModal_tbody'>
           <!--挖了个坑-->
           </tbody>
         </table>
@@ -81,23 +81,23 @@
 <script type="text/html" id="teacher_list_tpl">
   {{each result v i}}
   <tr>
-  <td>{{i+1}}</td>
-  <td>{{v.tc_name}}</td>
-  <td>{{v.tc_roster}}</td>
-  <td>{{v.tc_gender=="0"?"男":"女"}}</td>
-  <td>{{v.tc_cellphone}}</td>
-  <td>{{v.tc_birthday}}</td>
-  <td>{{v.tc_email}}</td>
-  <td>{{v.tc_join_date}}</td>
-  <td data-id="{{v.tc_id}}" data-status="{{v.tc_status}}">
-    <a href="#teacherModal"  class="btn btn-info btn-xs btn_view">查 看</a>
-    <a href="./teacher_add.html" class="btn btn-info btn-xs">编 辑</a>
-    {{if v.tc_status==0}}
-    <a href="javascript:;" class="btn btn-warning btn-xs btn_handle">注 销</a>
-    {{else}}
-    <a href="javascript:;" class="btn btn-success btn-xs btn_handle">启 用</a>
-    {{/if}}
-  </td>
+    <td>{{i+1}}</td>
+    <td>{{v.tc_name}}</td>
+    <td>{{v.tc_roster}}</td>
+    <td>{{v.tc_gender=="0"?"男":"女"}}</td>
+    <td>{{v.tc_cellphone}}</td>
+    <td>{{v.tc_birthday}}</td>
+    <td>{{v.tc_email}}</td>
+    <td>{{v.tc_join_date}}</td>
+    <td data-id="{{v.tc_id}}" data-status="{{v.tc_status}}">
+      <a href="#teacherModal" class="btn btn-info btn-xs btn_view">查 看</a>
+      <a href="/teacher/add?tc_id={{v.tc_id}}" class="btn btn-info btn-xs">编 辑</a>
+      {{if v.tc_status==0}}
+      <a href="javascript:;" class="btn btn-warning btn-xs btn_handle">注 销</a>
+      {{else}}
+      <a href="javascript:;" class="btn btn-success btn-xs btn_handle">启 用</a>
+      {{/if}}
+    </td>
   </tr>
   {{/each}}
 </script>
@@ -141,13 +141,12 @@
   <tr>
     <td colspan="7">
       <div class="introduce">
-        {{tc_introduce}}
+        {{@tc_introduce}}
       </div>
     </td>
   </tr>
-  
-  
-  
+
+
 </script>
 
 

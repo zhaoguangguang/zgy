@@ -2,8 +2,22 @@
  * Created by WIN7 on 2017/8/20.
  */
 
-define(["jquery", 'template', "jquery_cookie"], function ($, template) {
+define(["jquery", 'template',"nprogress", "jquery_cookie"], function ($, template,np) {
   $(function () {
+    
+    //进度条显示
+    np.start();
+    setTimeout(function () {
+      np.done();
+    },500)
+  
+    //每次发送ajax时候,让遮罩层 小齿轮显示出来
+    $(document).ajaxStart(function () {
+        $(".mask").show();
+    });
+    $(document).ajaxStop(function () {
+      $(".mask").hide();
+    })
     
     //判断页面是不是登录页面,如果是登录页面,就不用渲染头像,如果是,则需要渲染;
     
@@ -31,7 +45,6 @@ define(["jquery", 'template', "jquery_cookie"], function ($, template) {
         type: "post",
         url: "/api/logout",
         success: function (info) {
-          console.log(info);
           if (info.code == 200) {
             //退出
             $.removeCookie("userinfo", {path: "/"});
@@ -42,29 +55,37 @@ define(["jquery", 'template', "jquery_cookie"], function ($, template) {
     });
     
     
-    
     //侧边栏高亮
+    var pathname = location.pathname;
+    // if ( pathname== "/teacher/add") {
+    //   pathname = "/teacher/list";
+    // }
+    //获取地址栏中的pathname,跟a标签的href对比,如果相同,就让这个高亮,排他
+    var pathObj={
+      "/teacher/add":"/teacher/list",
+    };
+    pathname = pathObj[pathname]||pathname;
+    
     
     var $links = $(".navs a");
-  
-      $links.each(function () {
-
-        var $that = $(this);
-        $that.removeClass("active");
-        // console.log(location);
-        if($that.attr("href")==location.pathname){
-          $that.addClass("active");
-        }
-      });
-
-  
+    
+    $links.each(function () {
+      
+      var $that = $(this);
+      $that.removeClass("active");
+      // console.log(location);
+      if ($that.attr("href") == pathname) {
+        $that.addClass("active");
+      }
+    });
+    
     
     //二级菜单
     
     //点击时让二级菜单下面的ul显示
-    $(".two_menu").on("click",function () {
-    
-        $(this).children(".list-unstyled").slideToggle();
+    $(".two_menu").on("click", function () {
+      
+      $(this).children(".list-unstyled").slideToggle();
       
     });
     
